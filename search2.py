@@ -99,27 +99,30 @@ def find_input():
   circ.add(reverse_quantum_hash())
   circ.add(amplification()) 
 
-  circ.add(quantum_hash())
-  circ.add(ccccnot(targets=[0,1,2,3,6]))
-  circ.add(reverse_quantum_hash())
-  circ.add(amplification()) 
-  # print(circ)
   task = device.run(circ, shots=1)
   measurement = task.result().measurements[0] # one result if shots=1
   bitstring = ''.join(map(str,measurement))[:6] # we don't need the additional qbit
   return bitstring
 
-for i in range(0,10):  
-  def hash(message):
-    def cnot(x,y):
-        return str(int(bool(int(x))) ^ bool(int(y)))
-    
-    result = list(message)
-    result[0] = cnot(result[4], result[0])
-    result[2] = cnot(result[0], result[2])
-    result[3] = cnot(result[1], result[3])
-    result[1] = cnot(result[5], result[1])
-    return ''.join(result[0:4])
+def hash(message):
+  def cnot(x,y):
+      return str(int(bool(int(x))) ^ bool(int(y)))
+  
+  result = list(message)
+  result[0] = cnot(result[4], result[0])
+  result[2] = cnot(result[0], result[2])
+  result[3] = cnot(result[1], result[3])
+  result[1] = cnot(result[5], result[1])
+  return ''.join(result[0:4])
 
+counter=0
+found=False
+
+while not found:    
+  counter=counter+1
   input = find_input()
-  print(input, 'found!' if hash(input)=='1111' else '')
+  print(input)
+  if(hash(input)=='1111'):
+     found=True
+  
+print('Hash found at step', counter)
