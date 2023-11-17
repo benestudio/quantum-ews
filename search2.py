@@ -106,7 +106,7 @@ def find_input():
 
 def hash(message):
   def cnot(x,y):
-      return str(int(bool(int(x))) ^ bool(int(y)))
+    return str(int(x) ^ int(y))
   
   result = list(message)
   result[0] = cnot(result[4], result[0])
