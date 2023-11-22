@@ -73,12 +73,11 @@ def ccccnot(targets=[0, 1, 2, 3, 4]):
     circ.unitary(matrix=ccccnot_gate, targets=targets)
     return circ
 
-def amplification(n_qubits=4):
+def amplification():
     circ = Circuit()
-    circ.h(np.arange(n_qubits))
-    circ.x([0,1,2,3]).h([0])
+    circ.h([0,1,2,3]).x([0,1,2,3]).h([0])
     circ.add(cccnot(targets=[3,1,2,0]))
-    circ.h([0]).x([0,1,2,3]).h(np.arange(n_qubits))
+    circ.h([0]).x([0,1,2,3]).h([0,1,2,3])
     return circ
 
 def quantum_hash():
