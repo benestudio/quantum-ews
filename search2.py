@@ -3,7 +3,7 @@ from braket.aws import AwsDevice
 from braket.circuits import Circuit
 from braket.devices import LocalSimulator
 
-#device = AwsDevice('arn:aws:braket:us-east-1::device/qpu/ionq/Harmony')
+#device = AwsDevice('arn:aws:braket:::device/quantum-simulator/amazon/sv1')
 device = LocalSimulator()
 
 def cccnot(targets=[0, 1, 2, 3]):
